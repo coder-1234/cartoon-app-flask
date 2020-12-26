@@ -8,13 +8,16 @@ import cv2
 import os
 
 
-# In[2]:
+basedir = os.path.abspath(os.path.dirname(__file__))
+UPLOADED_PHOTOS_DEST = os.path.join(basedir,'static','uploads')
 
 
-def cartoonify(img_rgb,s):    
+def cartoonify(filename,s):    
 
+    img_rgb = cv2.imread(os.path.join(UPLOADED_PHOTOS_DEST,filename)) #img inp
     numBilateralFilters = 4
-
+    result_file = 'result_' + filename
+    result_dest = os.path.join(UPLOADED_PHOTOS_DEST,result_file)
     img_color = img_rgb
     #cv2.imshow("Orignal",img_color)
     #cv2.waitKey(0)
@@ -24,35 +27,17 @@ def cartoonify(img_rgb,s):
     img_gray = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
     img_blur = cv2.medianBlur(img_gray, 7)
     if(s=="Black&White"):
-        cv2.imwrite("Uploads/Black&White.jpg",img_blur)
+        cv2.imwrite(result_dest,img_blur)
     
     img_edge = cv2.adaptiveThreshold(img_blur, 255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY, 3, 2)
     if(s=="Sketch"):
-        cv2.imwrite("Uploads/Sketch.jpg",img_edge)
+        cv2.imwrite(result_dest,img_edge)
     #cv2.imshow("Sketch",img_edge)
     #cv2.waitKey(0)
     img_edge = cv2.cvtColor(img_edge, cv2.COLOR_GRAY2RGB)
-    return cv2.bitwise_and(img_color, img_edge)
-
-
-# In[4]:
-
-
-real_inputs = []
-cartoon_outputs = []
-
-img_rgb = cv2.imread("images/kim.jpg") #input path 
-#print(img_rgb.shape)
-s=input("Enter the type of image: ")
-output = cartoonify(img_rgb,s)
-real_inputs.append(img_rgb)
-cartoon_outputs.append(output)
-if(s=="Painting"):
-    cv2.imwrite("Uploads/Painting.jpg",output) #output path 
-print("Done")    
-#cv2.waitKey(0)
-#cv2.destroyAllWindows()
-
+    output=cv2.bitwise_and(img_color, img_edge)
+    if(s=="Painting"):
+        cv2.imwrite(result_dest,output) #img storage
 
 
 
