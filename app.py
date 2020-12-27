@@ -39,7 +39,7 @@ mail = Mail(app)
 
 def send_mail(email,filename):
 	msg = Message('Cartoonify',sender='hh5094266@gmail.com',recipients=[email])
-	msg.body = 'Thanks for visiting. Please find attached your image'
+	msg.body = 'Thanks for visiting. Please find attached, your image'
 	with app.open_resource(os.path.join(UPLOADED_PHOTOS_DEST,'result_'+filename)) as fp:
 		msg.attach(filename,"image/png",fp.read())
 		mail.send(msg)
@@ -74,7 +74,6 @@ def result():
 		return render_template('preview.html',email=request.args.get('email'), filename=request.args.get('filename'), form = form)
 	else:
 		if form.recieve_mail.data=='1':
-			print(request.args.get('email'),request.args.get('filename'))
 			send_mail(request.args.get('email'), request.args.get('filename'))
 
 		return redirect(url_for('initial'))
