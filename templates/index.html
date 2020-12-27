@@ -4,16 +4,16 @@
   <div class="container">
     <div class="row">
       <div class="col-12 col-md-3">
-        <img src="{{url_for('static', filename='/orignal_image.png')}}">
+        <img src="{{ url_for('static', filename='orignal_image.png') }}">
       </div>
       <div class="col-12 col-md-3">
-        <img src="{{url_for('static',filename='/bw.png')}}">
+        <img src="{{ url_for('static',filename='bw.png') }}">
       </div>
       <div class="col-12 col-md-3">
-        <img src="{{url_for('static',filename='/sketch.png')}}">
+        <img src="{{ url_for('static',filename='sketch.png') }}">
       </div>
       <div class="col-12 col-md-3">
-        <img src="{{url_for('static',filename='/cartoon.png')}}">
+        <img src="{{ url_for('static',filename='cartoon.png') }}">
       </div>
     </div>
     <hr>
@@ -22,8 +22,8 @@
   <div class="container">
     <div class="row">
       <div class="col-12 col-md-2"></div>
-      <div class="col-12 col-md-8">
-        <form method="POST" action="/" enctype="multipart/form-data">
+      <div class="col-12 col-md-8" style ="background-color: rgb(51, 48, 48); color:white;">
+        <form method="POST" action="/" enctype="multipart/form-data"> 
           {{form.hidden_tag()}}
           <div class="form-group">
             {{form.name.label(class_='label')}}<br>

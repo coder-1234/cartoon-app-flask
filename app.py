@@ -38,7 +38,7 @@ class mailForm(FlaskForm):
 mail = Mail(app)
 
 def send_mail(email,filename):
-	msg = Message('Cartoonify',sender=MAIL_USERNAME,reciever=email)
+	msg = Message('Cartoonify',sender='hh5094266@gmail.com', recipients=[email])
 	msg.body = 'Thanks for visiting. Please find attached your image'
 	with app.open_resource(os.path.join(UPLOADED_PHOTOS_DEST,filename)):
 		msg.attach(filename,"image/png",fp.read())
