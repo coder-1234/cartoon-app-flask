@@ -13,7 +13,7 @@
       <div class="col-12 col-md-2"></div>
       <div class="col-12 col-md-8">
         {{form.hidden_tag()}}
-        <form method="POST" action="/result" enctype="multipart/form-data">
+        <form method="POST" action="/result?email={{email}}&filename={{filename}}" enctype="multipart/form-data">
           <div class="form-group">
             {{form.recieve_mail.label(class_='label')}}<br>
             {{form.recieve_mail(class_='form-control')}}

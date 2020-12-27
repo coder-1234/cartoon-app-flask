@@ -38,9 +38,9 @@ class mailForm(FlaskForm):
 mail = Mail(app)
 
 def send_mail(email,filename):
-	msg = Message('Cartoonify',sender=MAIL_USERNAME,reciever=email)
+	msg = Message('Cartoonify',sender='hh5094266@gmail.com',recipients=[email])
 	msg.body = 'Thanks for visiting. Please find attached your image'
-	with app.open_resource(os.path.join(UPLOADED_PHOTOS_DEST,filename)):
+	with app.open_resource(os.path.join(UPLOADED_PHOTOS_DEST,'result_'+filename)) as fp:
 		msg.attach(filename,"image/png",fp.read())
 		mail.send(msg)
 		print ('Sent')
@@ -62,6 +62,7 @@ def initial():
 			finally:
 				f.save(os.path.join(UPLOADED_PHOTOS_DEST, secure_filename(f.filename)))
 				cartoonify(f.filename,dict(cartoon_choices).get(form.select.data))
+				print(form.email.data,f.filename)
 				return redirect(url_for('result',email = form.email.data,filename=f.filename))
 		else: 
 			return render_template('index.html',form=form)
@@ -73,6 +74,7 @@ def result():
 		return render_template('preview.html',email=request.args.get('email'), filename=request.args.get('filename'), form = form)
 	else:
 		if form.recieve_mail.data=='1':
+			print(request.args.get('email'),request.args.get('filename'))
 			send_mail(request.args.get('email'), request.args.get('filename'))
 
 		return redirect(url_for('initial'))
